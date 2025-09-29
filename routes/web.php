@@ -9,10 +9,15 @@ use App\Http\Controllers\Api\FileUploadController as ApiFileUploadController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
+
+// Custom Auth Routes - These MUST be first to override default Fortify routes
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 
 Route::get('/', function () {
     return view('home');
@@ -57,10 +62,6 @@ Route::prefix('api')->group(function () {
     });
 });
 
-// Auth Routes
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-
 // Web Routes for Products
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
@@ -74,7 +75,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/products', [AdminController::class, 'products'])->name('admin.products');
 });
 
-Route::view('dashboard', 'dashboard')
+Route::get('dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
@@ -97,4 +98,5 @@ Route::middleware(['auth'])->group(function () {
         ->name('two-factor.show');
 });
 
+// Load remaining auth routes (email verification, etc.)
 require __DIR__.'/auth.php';
