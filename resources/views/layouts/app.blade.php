@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,39 +20,48 @@
         ::-webkit-scrollbar {
             width: 6px;
         }
+
         ::-webkit-scrollbar-track {
             background: #f1f1f1;
         }
+
         ::-webkit-scrollbar-thumb {
             background: #888;
             border-radius: 3px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
     </style>
 </head>
+
 <body class="bg-gray-50">
     <!-- Navigation -->
     <nav class="bg-white border-gray-200 shadow-sm">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="{{ route('home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <span class="self-center text-2xl font-semibold whitespace-nowrap text-blue-600">BMT Store</span>
+                <span class="self-center text-2xl font-semibold whitespace-nowrap text-green-600">BMT Store</span>
             </a>
 
             <div class="flex items-center space-x-6">
                 <div class="hidden w-full md:block md:w-auto">
-                    <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white">
+                    <ul
+                        class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white">
                         <li>
-                            <a href="{{ route('home') }}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Beranda</a>
+                            <a href="{{ route('home') }}"
+                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0">Beranda</a>
                         </li>
                         <li>
-                            <a href="{{ route('products.index') }}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Produk</a>
+                            <a href="{{ route('products.index') }}"
+                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0">Produk</a>
                         </li>
                         <li>
-                            <a href="{{ route('cart.index') }}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 relative">
+                            <a href="{{ route('cart.index') }}"
+                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 relative">
                                 Keranjang
-                                <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                                <span id="cart-count"
+                                    class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
                             </a>
                         </li>
                     </ul>
@@ -61,21 +71,25 @@
                 <div id="auth-nav" class="flex items-center space-x-4">
                     <!-- Guest Navigation -->
                     <div id="guest-nav" class="flex items-center space-x-4">
-                        <a href="{{ route('login') }}" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
+                        <a href="{{ route('login') }}"
+                            class="text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium">
                             Masuk
                         </a>
-                        <a href="{{ route('register') }}" class="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium">
+                        <a href="{{ route('register') }}"
+                            class="bg-green-600 text-white hover:bg-green-700 px-4 py-2 rounded-md text-sm font-medium">
                             Daftar
                         </a>
                     </div>
 
                     <!-- Authenticated Navigation -->
                     <div id="authenticated-nav" class="hidden flex items-center space-x-4">
-                        <a href="{{ route('admin.index') }}" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
+                        <a href="{{ route('admin.index') }}"
+                            class="text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium">
                             Admin
                         </a>
                         <span id="user-name" class="text-gray-700 text-sm font-medium"></span>
-                        <button onclick="logout()" class="text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium">
+                        <button onclick="logout()"
+                            class="text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium">
                             Logout
                         </button>
                     </div>
@@ -138,12 +152,13 @@
             const toastId = Date.now();
 
             const bgColor = type === 'success' ? 'bg-green-500' :
-                           type === 'error' ? 'bg-red-500' :
-                           type === 'warning' ? 'bg-yellow-500' : 'bg-blue-500';
+                type === 'error' ? 'bg-red-500' :
+                type === 'warning' ? 'bg-yellow-500' : 'bg-green-500';
 
             const toast = document.createElement('div');
             toast.id = `toast-${toastId}`;
-            toast.className = `${bgColor} text-white px-6 py-4 rounded-lg shadow-lg transform transition-all duration-300 ease-in-out max-w-sm`;
+            toast.className =
+                `${bgColor} text-white px-6 py-4 rounded-lg shadow-lg transform transition-all duration-300 ease-in-out max-w-sm`;
             toast.innerHTML = `
                 <div class="flex items-center justify-between">
                     <span class="text-sm font-medium">${message}</span>
@@ -196,7 +211,7 @@
                         <button onclick="closeModal()" class="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
                             ${cancelText}
                         </button>
-                        <button onclick="handleModalConfirm()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        <button onclick="handleModalConfirm()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
                             ${confirmText}
                         </button>
                     </div>
@@ -249,34 +264,34 @@
 
             if (token) {
                 fetch('/api/auth/logout', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': `Bearer ${token}`,
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        showToast(data.message, 'success');
-                    }
-                })
-                .catch(error => {
-                    console.error('Logout error:', error);
-                })
-                .finally(() => {
-                    // Clear local storage regardless of API call result
-                    localStorage.removeItem('auth_token');
-                    localStorage.removeItem('user');
-                    showGuestNav();
-                    updateCartCount();
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Authorization': `Bearer ${token}`,
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showToast(data.message, 'success');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Logout error:', error);
+                    })
+                    .finally(() => {
+                        // Clear local storage regardless of API call result
+                        localStorage.removeItem('auth_token');
+                        localStorage.removeItem('user');
+                        showGuestNav();
+                        updateCartCount();
 
-                    // Redirect to home if on protected page
-                    if (window.location.pathname.includes('/admin')) {
-                        window.location.href = '/';
-                    }
-                });
+                        // Redirect to home if on protected page
+                        if (window.location.pathname.includes('/admin')) {
+                            window.location.href = '/';
+                        }
+                    });
             }
         }
 
@@ -289,4 +304,5 @@
 
     @stack('scripts')
 </body>
+
 </html>

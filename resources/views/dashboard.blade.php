@@ -14,8 +14,8 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
                 <div class="flex items-center">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                         </svg>
@@ -66,12 +66,12 @@
                 <h3 class="text-xl font-semibold mb-4">Aksi Cepat</h3>
                 <div class="space-y-3">
                     <a href="{{ route('products.index') }}"
-                        class="flex items-center p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
-                        <svg class="w-5 h-5 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        class="flex items-center p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
+                        <svg class="w-5 h-5 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                         </svg>
-                        <span class="text-blue-700 font-medium">Lihat Produk</span>
+                        <span class="text-green-700 font-medium">Lihat Produk</span>
                     </a>
                     <a href="{{ route('cart.index') }}"
                         class="flex items-center p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
