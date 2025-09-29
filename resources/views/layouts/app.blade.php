@@ -84,7 +84,7 @@
                     <!-- Authenticated Navigation -->
                     <div id="authenticated-nav" class="hidden flex items-center space-x-4">
                         <a href="{{ route('admin.index') }}"
-                            class="text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium">
+                            class="text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium bg-green-200">
                             Admin
                         </a>
                         <span id="user-name" class="text-gray-700 text-sm font-medium"></span>
