@@ -277,9 +277,6 @@ This project adalah case study untuk interview purpose. All rights reserved.
 **Case Study untuk KSPPS BMT Beringharjo**
 - Position: Fullstack Developer
 - Tech Stack: Laravel 12, MySQL, Tailwind CSS, JavaScript
-- Development Time: Sesuai requirement step-by-step
-- Code Quality: Clean code dengan best practices
-- Architecture: MVC dengan API-first approach
 
 ---
 
