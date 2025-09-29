@@ -6,7 +6,9 @@
       "Bash(php artisan make:controller:*)",
       "Bash(curl -H \"Accept: application/json\" http://localhost:8000/api/products)",
       "Bash(curl -H \"Accept: application/json\" http://localhost:8000/api/products/1)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(php artisan migrate:fresh:*)",
+      "Bash(php artisan:*)"
     ],
     "deny": [],
     "ask": []

@@ -24,7 +24,7 @@
                                     <!-- Product Image -->
                                     <div class="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
                                         @if($item->product->image)
-                                            <img src="{{ asset('storage/products/' . $item->product->image) }}"
+                                            <img src="{{ filter_var($item->product->image, FILTER_VALIDATE_URL) ? $item->product->image : asset('storage/products/' . $item->product->image) }}"
                                                  alt="{{ $item->product->name }}"
                                                  class="w-full h-full object-cover">
                                         @else

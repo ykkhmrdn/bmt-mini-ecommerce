@@ -17,7 +17,7 @@
                 <!-- Product Image -->
                 <div class="aspect-square bg-gray-100 flex items-center justify-center">
                     @if($product->image)
-                        <img src="{{ asset('storage/products/' . $product->image) }}"
+                        <img src="{{ filter_var($product->image, FILTER_VALIDATE_URL) ? $product->image : asset('storage/products/' . $product->image) }}"
                              alt="{{ $product->name }}"
                              class="w-full h-full object-cover">
                     @else
@@ -75,9 +75,38 @@
 
 @push('scripts')
 <script>
+// Get CSRF token from meta tag
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
 function addToCart(productId) {
-    // Basic cart functionality - akan dikembangkan nanti
-    alert('Fitur keranjang akan segera tersedia!');
+    const quantity = 1; // Default quantity for product list
+
+    fetch('/api/cart/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        },
+        body: JSON.stringify({
+            product_id: productId,
+            quantity: quantity
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            // Update cart count in navigation
+            updateCartCount();
+        } else {
+            alert(data.message || 'Gagal menambahkan produk ke keranjang');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Terjadi kesalahan saat menambahkan produk ke keranjang');
+    });
 }
 </script>
 @endpush
