@@ -56,11 +56,11 @@
 
         <!-- Call to Action -->
         <div class="bg-white p-8 rounded-lg shadow-sm border border-gray-200 text-center">
-            <h2 class="text-2xl font-bold mb-4">Siap Mulai Berbelanja?</h2>
-            <p class="text-gray-600 mb-6">Jelajahi koleksi produk menarik kami dan temukan yang Anda butuhkan</p>
+            <h2 class="text-2xl font-bold mb-4">Ready to Start Shopping?</h2>
+            <p class="text-gray-600 mb-6">Browse our collection of amazing products and find what you need</p>
             <a href="{{ route('products.index') }}"
                 class="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors">
-                Lihat Semua Produk
+                View All Products
             </a>
         </div>
     </div>

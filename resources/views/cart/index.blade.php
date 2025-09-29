@@ -156,10 +156,18 @@ function removeFromCart(cartId) {
 }
 
 function checkout() {
-    if (!confirm('Apakah Anda yakin ingin melanjutkan checkout?')) {
-        return;
-    }
+    showModal(
+        'Konfirmasi Checkout',
+        'Apakah Anda yakin ingin melanjutkan checkout? Pesanan akan langsung diproses.',
+        'Ya, Checkout',
+        'Batal',
+        function() {
+            processCheckout();
+        }
+    );
+}
 
+function processCheckout() {
     fetch('/api/checkout', {
         method: 'POST',
         headers: {
