@@ -33,6 +33,17 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
+
+        /* Mobile menu animation */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+
+        .mobile-menu.active {
+            max-height: 500px;
+        }
     </style>
 </head>
 
@@ -40,14 +51,31 @@
     <!-- Navigation -->
     <nav class="bg-white border-gray-200 shadow-sm">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <!-- Logo -->
             <a href="{{ route('home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <span class="self-center text-2xl font-semibold whitespace-nowrap text-green-600">BMT Store</span>
             </a>
 
-            <div class="flex items-center space-x-6">
-                <div class="hidden w-full md:block md:w-auto">
-                    <ul
-                        class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white">
+            <!-- Mobile hamburger button -->
+            <button id="mobile-menu-button" type="button"
+                class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
+                <span class="sr-only">Open main menu</span>
+                <svg id="hamburger-icon" class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 17 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M1 1h15M1 7h15M1 13h15" />
+                </svg>
+                <svg id="close-icon" class="w-5 h-5 hidden" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                </svg>
+            </button>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex md:items-center md:space-x-6">
+                <div class="w-full md:block md:w-auto">
+                    <ul class="font-medium flex flex-row space-x-8 rtl:space-x-reverse">
                         <li>
                             <a href="{{ route('home') }}"
                                 class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0">Beranda</a>
@@ -67,10 +95,10 @@
                     </ul>
                 </div>
 
-                <!-- Auth Navigation -->
-                <div id="auth-nav" class="flex items-center space-x-4">
+                <!-- Desktop Auth Navigation -->
+                <div id="desktop-auth-nav" class="flex items-center space-x-4">
                     <!-- Guest Navigation -->
-                    <div id="guest-nav" class="flex items-center space-x-4">
+                    <div id="desktop-guest-nav" class="flex items-center space-x-4">
                         <a href="{{ route('login') }}"
                             class="text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium">
                             Masuk
@@ -82,14 +110,67 @@
                     </div>
 
                     <!-- Authenticated Navigation -->
-                    <div id="authenticated-nav" class="hidden flex items-center space-x-4">
+                    <div id="desktop-authenticated-nav" class="hidden flex items-center space-x-4">
                         <a href="{{ route('admin.index') }}"
                             class="text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium bg-green-200">
                             Admin
                         </a>
-                        <span id="user-name" class="text-gray-700 text-sm font-medium"></span>
+                        <span id="desktop-user-name" class="text-gray-700 text-sm font-medium"></span>
                         <button onclick="logout()"
                             class="text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium">
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="mobile-menu md:hidden">
+            <div class="px-4 pt-2 pb-4 space-y-1 bg-gray-50 border-t border-gray-200">
+                <!-- Mobile Navigation Links -->
+                <div class="space-y-1 mb-4">
+                    <a href="{{ route('home') }}"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-green-700 hover:bg-gray-100">
+                        Beranda
+                    </a>
+                    <a href="{{ route('products.index') }}"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-green-700 hover:bg-gray-100">
+                        Produk
+                    </a>
+                    <a href="{{ route('cart.index') }}"
+                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-green-700 hover:bg-gray-100 relative">
+                        Keranjang
+                        <span id="mobile-cart-count"
+                            class="absolute top-1 right-3 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Auth Navigation -->
+                <div class="border-t border-gray-200 pt-4">
+                    <!-- Mobile Guest Navigation -->
+                    <div id="mobile-guest-nav" class="space-y-2">
+                        <a href="{{ route('login') }}"
+                            class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-gray-100">
+                            Masuk
+                        </a>
+                        <a href="{{ route('register') }}"
+                            class="block px-3 py-2 rounded-md text-base font-medium bg-green-600 text-white hover:bg-green-700 text-center">
+                            Daftar
+                        </a>
+                    </div>
+
+                    <!-- Mobile Authenticated Navigation -->
+                    <div id="mobile-authenticated-nav" class="hidden space-y-2">
+                        <div class="px-3 py-2">
+                            <span id="mobile-user-name" class="block text-base font-medium text-gray-900"></span>
+                        </div>
+                        <a href="{{ route('admin.index') }}"
+                            class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-gray-100 bg-green-200">
+                            Admin
+                        </a>
+                        <button onclick="logout()"
+                            class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-red-600 hover:bg-gray-100">
                             Logout
                         </button>
                     </div>
@@ -130,17 +211,65 @@
 
     <!-- Custom JavaScript -->
     <script>
+        // Mobile menu toggle functionality
+        function initializeMobileMenu() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const closeIcon = document.getElementById('close-icon');
+
+            mobileMenuButton.addEventListener('click', function() {
+                const isOpen = mobileMenu.classList.contains('active');
+
+                if (isOpen) {
+                    // Close menu
+                    mobileMenu.classList.remove('active');
+                    hamburgerIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                } else {
+                    // Open menu
+                    mobileMenu.classList.add('active');
+                    hamburgerIcon.classList.add('hidden');
+                    closeIcon.classList.remove('hidden');
+                }
+            });
+
+            // Close mobile menu when clicking on a link
+            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                    hamburgerIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                });
+            });
+
+            // Close mobile menu when window is resized to desktop
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 768) { // md breakpoint
+                    mobileMenu.classList.remove('active');
+                    hamburgerIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                }
+            });
+        }
+
         // Update cart count in navigation
         function updateCartCount() {
             fetch('/api/cart/count')
                 .then(response => response.json())
                 .then(data => {
                     const cartCount = document.getElementById('cart-count');
+                    const mobileCartCount = document.getElementById('mobile-cart-count');
+
                     if (data.count > 0) {
                         cartCount.textContent = data.count;
                         cartCount.classList.remove('hidden');
+                        mobileCartCount.textContent = data.count;
+                        mobileCartCount.classList.remove('hidden');
                     } else {
                         cartCount.classList.add('hidden');
+                        mobileCartCount.classList.add('hidden');
                     }
                 })
                 .catch(error => console.error('Error updating cart count:', error));
@@ -249,14 +378,25 @@
         }
 
         function showGuestNav() {
-            document.getElementById('guest-nav').classList.remove('hidden');
-            document.getElementById('authenticated-nav').classList.add('hidden');
+            // Desktop
+            document.getElementById('desktop-guest-nav').classList.remove('hidden');
+            document.getElementById('desktop-authenticated-nav').classList.add('hidden');
+
+            // Mobile
+            document.getElementById('mobile-guest-nav').classList.remove('hidden');
+            document.getElementById('mobile-authenticated-nav').classList.add('hidden');
         }
 
         function showAuthenticatedNav(user) {
-            document.getElementById('guest-nav').classList.add('hidden');
-            document.getElementById('authenticated-nav').classList.remove('hidden');
-            document.getElementById('user-name').textContent = `Halo, ${user.name}`;
+            // Desktop
+            document.getElementById('desktop-guest-nav').classList.add('hidden');
+            document.getElementById('desktop-authenticated-nav').classList.remove('hidden');
+            document.getElementById('desktop-user-name').textContent = `Halo, ${user.name}`;
+
+            // Mobile
+            document.getElementById('mobile-guest-nav').classList.add('hidden');
+            document.getElementById('mobile-authenticated-nav').classList.remove('hidden');
+            document.getElementById('mobile-user-name').textContent = `Halo, ${user.name}`;
         }
 
         function logout() {
@@ -295,8 +435,9 @@
             }
         }
 
-        // Initialize cart count and auth status on page load
+        // Initialize everything on page load
         document.addEventListener('DOMContentLoaded', function() {
+            initializeMobileMenu();
             updateCartCount();
             checkAuthStatus();
         });
