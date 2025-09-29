@@ -75,6 +75,9 @@
     <!-- Flowbite JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
+
     <!-- Custom JavaScript -->
     <script>
         // Update cart count in navigation
@@ -91,6 +94,48 @@
                     }
                 })
                 .catch(error => console.error('Error updating cart count:', error));
+        }
+
+        // Toast notification function
+        function showToast(message, type = 'success') {
+            const toastContainer = document.getElementById('toast-container');
+            const toastId = Date.now();
+
+            const bgColor = type === 'success' ? 'bg-green-500' :
+                           type === 'error' ? 'bg-red-500' :
+                           type === 'warning' ? 'bg-yellow-500' : 'bg-blue-500';
+
+            const toast = document.createElement('div');
+            toast.id = `toast-${toastId}`;
+            toast.className = `${bgColor} text-white px-6 py-4 rounded-lg shadow-lg transform transition-all duration-300 ease-in-out max-w-sm`;
+            toast.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium">${message}</span>
+                    <button onclick="removeToast('${toastId}')" class="ml-4 text-white hover:text-gray-200">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            `;
+
+            toastContainer.appendChild(toast);
+
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                removeToast(toastId);
+            }, 3000);
+        }
+
+        function removeToast(toastId) {
+            const toast = document.getElementById(`toast-${toastId}`);
+            if (toast) {
+                toast.style.transform = 'translateX(100%)';
+                toast.style.opacity = '0';
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }
         }
 
         // Initialize cart count on page load

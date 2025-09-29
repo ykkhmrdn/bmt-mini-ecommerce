@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ProductController as ApiProductController;
 use App\Http\Controllers\Api\CartController as ApiCartController;
+use App\Http\Controllers\Api\CheckoutController as ApiCheckoutController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,8 @@ Route::prefix('api')->group(function () {
     Route::get('/cart/count', [ApiCartController::class, 'count'])->name('api.cart.count');
     Route::post('/cart/add', [ApiCartController::class, 'store'])->name('api.cart.add');
     Route::delete('/cart/{id}', [ApiCartController::class, 'destroy'])->name('api.cart.remove');
+
+    Route::post('/checkout', [ApiCheckoutController::class, 'store'])->name('api.checkout');
 });
 
 // Web Routes for Products

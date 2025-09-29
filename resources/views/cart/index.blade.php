@@ -146,18 +146,46 @@ function removeFromCart(cartId) {
             // Reload page if cart is empty
             location.reload();
         } else {
-            alert(data.message || 'Gagal menghapus produk dari keranjang');
+            showToast(data.message || 'Gagal menghapus produk dari keranjang', 'error');
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Terjadi kesalahan saat menghapus produk dari keranjang');
+        showToast('Terjadi kesalahan saat menghapus produk dari keranjang', 'error');
     });
 }
 
 function checkout() {
-    // Checkout functionality akan dikembangkan nanti
-    alert('Fitur checkout akan segera tersedia!');
+    if (!confirm('Apakah Anda yakin ingin melanjutkan checkout?')) {
+        return;
+    }
+
+    fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showToast(data.message, 'success');
+            // Update cart count in navigation
+            updateCartCount();
+            // Redirect to success page or reload
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 2000);
+        } else {
+            showToast(data.message || 'Gagal melakukan checkout', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showToast('Terjadi kesalahan saat melakukan checkout', 'error');
+    });
 }
 </script>
 @endpush

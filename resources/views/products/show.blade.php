@@ -193,16 +193,16 @@ function addToCart(productId) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert(data.message);
+            showToast(data.message, 'success');
             // Update cart count in navigation
             updateCartCount();
         } else {
-            alert(data.message || 'Gagal menambahkan produk ke keranjang');
+            showToast(data.message || 'Gagal menambahkan produk ke keranjang', 'error');
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Terjadi kesalahan saat menambahkan produk ke keranjang');
+        showToast('Terjadi kesalahan saat menambahkan produk ke keranjang', 'error');
     });
 }
 
