@@ -75,19 +75,24 @@
             <!-- Desktop Navigation -->
             <div class="hidden md:flex md:items-center md:space-x-6">
                 <div class="w-full md:block md:w-auto">
-                    <ul class="font-medium flex flex-row space-x-8 rtl:space-x-reverse">
+                    <ul class="font-medium flex flex-row space-x-6 rtl:space-x-reverse">
                         <li>
                             <a href="{{ route('home') }}"
-                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0">Beranda</a>
+                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 transition-colors">Beranda</a>
                         </li>
                         <li>
                             <a href="{{ route('products.index') }}"
-                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0">Produk</a>
+                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 transition-colors">Produk</a>
                         </li>
                         <li>
                             <a href="{{ route('cart.index') }}"
-                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 relative">
-                                Keranjang
+                                class="flex items-center py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-green-700 md:p-0 relative transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5L7 13m0 0h10M7 13v6a2 2 0 002 2h6a2 2 0 002-2v-6">
+                                    </path>
+                                </svg>
                                 <span id="cart-count"
                                     class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
                             </a>
@@ -100,11 +105,11 @@
                     <!-- Guest Navigation -->
                     <div id="desktop-guest-nav" class="flex items-center space-x-4">
                         <a href="{{ route('login') }}"
-                            class="text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium">
+                            class="text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                             Masuk
                         </a>
                         <a href="{{ route('register') }}"
-                            class="bg-green-600 text-white hover:bg-green-700 px-4 py-2 rounded-md text-sm font-medium">
+                            class="bg-green-600 text-white hover:bg-green-700 px-4 py-2 rounded-md text-sm font-medium transition-colors">
                             Daftar
                         </a>
                     </div>
@@ -112,12 +117,12 @@
                     <!-- Authenticated Navigation -->
                     <div id="desktop-authenticated-nav" class="hidden flex items-center space-x-4">
                         <a href="{{ route('admin.index') }}"
-                            class="text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium bg-green-200">
+                            class="text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium bg-green-100 hover:bg-green-200 transition-colors">
                             Admin
                         </a>
                         <span id="desktop-user-name" class="text-gray-700 text-sm font-medium"></span>
                         <button onclick="logout()"
-                            class="text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium">
+                            class="text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                             Logout
                         </button>
                     </div>
@@ -131,18 +136,24 @@
                 <!-- Mobile Navigation Links -->
                 <div class="space-y-1 mb-4">
                     <a href="{{ route('home') }}"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-green-700 hover:bg-gray-100">
+                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-green-700 hover:bg-gray-100 transition-colors">
                         Beranda
                     </a>
                     <a href="{{ route('products.index') }}"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-green-700 hover:bg-gray-100">
+                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-green-700 hover:bg-gray-100 transition-colors">
                         Produk
                     </a>
                     <a href="{{ route('cart.index') }}"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-green-700 hover:bg-gray-100 relative">
+                        class="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-green-700 hover:bg-gray-100 relative transition-colors">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5L7 13m0 0h10M7 13v6a2 2 0 002 2h6a2 2 0 002-2v-6">
+                            </path>
+                        </svg>
                         Keranjang
                         <span id="mobile-cart-count"
-                            class="absolute top-1 right-3 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                            class="ml-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
                     </a>
                 </div>
 
@@ -151,11 +162,11 @@
                     <!-- Mobile Guest Navigation -->
                     <div id="mobile-guest-nav" class="space-y-2">
                         <a href="{{ route('login') }}"
-                            class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-gray-100">
+                            class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-gray-100 transition-colors">
                             Masuk
                         </a>
                         <a href="{{ route('register') }}"
-                            class="block px-3 py-2 rounded-md text-base font-medium bg-green-600 text-white hover:bg-green-700 text-center">
+                            class="block px-3 py-2 rounded-md text-base font-medium bg-green-600 text-white hover:bg-green-700 text-center transition-colors">
                             Daftar
                         </a>
                     </div>
@@ -166,11 +177,11 @@
                             <span id="mobile-user-name" class="block text-base font-medium text-gray-900"></span>
                         </div>
                         <a href="{{ route('admin.index') }}"
-                            class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-gray-100 bg-green-200">
+                            class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-gray-100 bg-green-100 transition-colors">
                             Admin
                         </a>
                         <button onclick="logout()"
-                            class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-red-600 hover:bg-gray-100">
+                            class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-red-600 hover:bg-gray-100 transition-colors">
                             Logout
                         </button>
                     </div>
