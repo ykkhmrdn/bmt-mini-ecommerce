@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -32,30 +33,56 @@ class FileUploadController extends Controller
         try {
             $image = $request->file('image');
 
+            if (!$image || !$image->isValid()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'File upload tidak valid'
+                ], 400);
+            }
+
             // Generate unique filename
             $filename = Str::random(40) . '.' . $image->getClientOriginalExtension();
 
-            // Store image in products directory
-            $path = $image->storeAs('public/products', $filename);
+            // Store image in products directory dengan disk 'public'
+            $stored = Storage::disk('public')->putFileAs('products', $image, $filename);
 
-            // Get the public URL
-            $url = Storage::url('products/' . $filename);
+            // Verify file was actually stored
+            if (!$stored || !Storage::disk('public')->exists('products/' . $filename)) {
+                Log::error('File upload failed', [
+                    'filename' => $filename,
+                    'stored_path' => $stored,
+                    'exists' => Storage::disk('public')->exists('products/' . $filename)
+                ]);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'File gagal disimpan ke storage. Path: ' . ($stored ?: 'null')
+                ], 500);
+            }
+
+            // Build full URL
+            $fullUrl = asset('storage/products/' . $filename);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Gambar berhasil diupload',
                 'data' => [
                     'filename' => $filename,
-                    'path' => $path,
-                    'url' => $url,
-                    'full_url' => asset('storage/products/' . $filename)
+                    'path' => 'products/' . $filename,
+                    'url' => '/storage/products/' . $filename,
+                    'full_url' => $fullUrl
                 ]
             ]);
 
         } catch (\Exception $e) {
+            Log::error('Upload exception', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
             return response()->json([
                 'success' => false,
-                'message' => 'Gagal mengupload gambar'
+                'message' => 'Gagal mengupload gambar: ' . $e->getMessage()
             ], 500);
         }
     }

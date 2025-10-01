@@ -589,16 +589,26 @@
                     const result = await response.json();
 
                     if (result.success) {
+                        // Simpan full URL untuk disimpan ke database
                         uploadedImageUrl = result.data.full_url;
                         currentImageFilename = result.data.filename;
+
+                        // Tampilkan preview image
                         showUploadedImage(result.data.full_url);
                         showToast('Gambar berhasil diupload', 'success');
+
+                        console.log('Upload success:', {
+                            full_url: result.data.full_url,
+                            filename: result.data.filename,
+                            path: result.data.path
+                        });
                     } else {
+                        console.error('Upload failed:', result);
                         throw new Error(result.message || 'Upload failed');
                     }
                 } catch (error) {
                     console.error('Upload error:', error);
-                    showToast('Gagal mengupload gambar', 'error');
+                    showToast('Gagal mengupload gambar: ' + error.message, 'error');
                     input.value = '';
                 } finally {
                     hideUploadProgress();
