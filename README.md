@@ -78,7 +78,7 @@ BMT Mini E-Commerce adalah aplikasi web e-commerce sederhana yang menyediakan fi
     DB_PORT=3306
     DB_DATABASE=bmt_mini_ecommerce
     DB_USERNAME=root
-    DB_PASSWORD=zyxkoo
+    DB_PASSWORD=
     ```
 
 5. **Database Setup**
